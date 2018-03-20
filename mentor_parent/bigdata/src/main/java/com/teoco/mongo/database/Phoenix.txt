@@ -1,0 +1,1 @@
+https://www.slideshare.net/je2451/apache-phoenix-and-apache-hbase-an-enterprise-grade-data-warehouse
