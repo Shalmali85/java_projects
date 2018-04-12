@@ -1,0 +1,4 @@
+spring:
+   data:
+      mongodb.uri: ${vcap.services.mongodb.credentials.uri}
+      mongo.repositories.enabled: true
