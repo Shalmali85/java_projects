@@ -1,8 +1,7 @@
 ---
 applications:
   - name: spring-cloud-test
-    host: spring-cloud-test 
-    path: /target/SpringCloud-1.0-SNAPSHOT.jar
+    path: target/SpringCloud-1.0-SNAPSHOT.jar
     memory: 1G
     env:
       SPRING_PROFILES_ACTIVE: cloud

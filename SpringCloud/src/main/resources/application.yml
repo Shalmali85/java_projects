@@ -2,3 +2,10 @@ spring:
    data:
       mongodb.uri: ${vcap.services.mongodb.credentials.uri}
       mongo.repositories.enabled: true
+   profiles: cloud
+---
+spring:
+   data:
+     mongodb.uri: mongodb://localhost:27017/randev
+     mongo.repositories.enabled: true
+   profiles: default
