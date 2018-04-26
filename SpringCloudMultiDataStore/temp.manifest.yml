@@ -1,0 +1,15 @@
+---
+applications:
+  - name: spring-cloud-test
+    path: target/SpringCloud-1.0-SNAPSHOT.jar
+    memory: 1G
+    env:
+      SPRING_PROFILES_ACTIVE: cloud
+    services:
+      - mongodb
+      - postrgre_test
+ 
+buildpack: https://github.com/cloudfoundry/java-buildpack.git
+ 
+env:
+    JBP_CONFIG_SPRING_AUTO_RECONFIGURATION: '{enabled: false}'
