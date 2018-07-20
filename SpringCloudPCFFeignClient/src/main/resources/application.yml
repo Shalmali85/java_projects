@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: spring-cloud-pcf-feign-client
+
+server:
+  port: 8081
+
+
+security:
+  basic:
+    enabled: false # turn off securing our application endpoints
+
+management:
+  security:
+    enabled: false

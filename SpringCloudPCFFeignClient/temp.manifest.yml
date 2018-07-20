@@ -1,0 +1,16 @@
+---
+applications:
+  - name: spring-cloud-pcf-feign-client
+    path: target/SpringCloudPCFFeignClient-1.0-SNAPSHOT.jar
+    memory: 1G
+    env:
+      SPRING_PROFILES_ACTIVE: cloud
+    services:
+      - mongodb
+      - postrgre_test
+      - feign-eureka-servicediscovery
+
+buildpack: https://github.com/cloudfoundry/java-buildpack.git
+
+env:
+    JBP_CONFIG_SPRING_AUTO_RECONFIGURATION: '{enabled: false}'
