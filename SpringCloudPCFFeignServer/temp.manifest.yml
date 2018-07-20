@@ -1,0 +1,14 @@
+---
+applications:
+  - name: spring-cloud-pcf-feign-server
+    path: target/SpringCloud-1.0-SNAPSHOT.jar
+    memory: 1G
+    env:
+      SPRING_PROFILES_ACTIVE: cloud
+    services:
+      - mongodb
+      - feign-eureka-servicediscovery
+
+buildpack: https://github.com/cloudfoundry/java-buildpack.git
+
+
