@@ -1,19 +1,19 @@
-import java.io.Serializable;
 
-public class CustomMap<K,V> implements Serializable {
+import java.util.Map;
 
-  public Entry <K,V>[] finalMap ;
+public class CustomMap<K,V>  {
+
   private transient Node <K,V>[] table ;
 
   public CustomMap(){
       table = new Node[200];
   }
 
-  public Entry<K,V>[] put(K key, V value){
+  public void put(K key, V value){
       Node <K,V>[] entry;
       entry = table;
       if(key == null){
-          return null;
+          return ;
       }
       int hash = this.generateHashCode(key);
       if(entry[hash] == null) {
@@ -36,34 +36,16 @@ public class CustomMap<K,V> implements Serializable {
               }
           }
       }
-     return putVal(entry);
   }
 
-  public Entry<K,V>[] putVal(Node<K,V>[] map){
-      finalMap = new Entry [map.length];
-      int count = 0;
-      for(int i =0; i< map.length;i++){
-          if(map[i]!=null){
-              finalMap[count] = new Entry(map[i].key,map[i].value);
-              count++;
-              Node<K,V> current = map[i].next;
-              while(current != null) {
-                  finalMap[count] = new Entry(current.key, current.value);
-                    count++;
-                    current=current.next;
-                  }
-          }
-      }
-      return finalMap;
-  }
-   public  int generateHashCode(Object key){
+   private  int generateHashCode(Object key){
       if(key instanceof String){
           return ((String) key).length()+((String) key).charAt(0);
       }
        return (Integer)key;
    }
 
-    public class Node<K,V>{
+    static  class Node<K,V> implements Map.Entry<K,V>{
         public K key;
         public V value;
         public Node next;
@@ -74,6 +56,20 @@ public class CustomMap<K,V> implements Serializable {
             this.next = next;
         }
 
+        @Override
+        public K getKey() {
+            return key;
+        }
+
+        @Override
+        public V getValue() {
+            return value;
+        }
+
+        @Override
+        public V setValue(V value) {
+            return this.value = value;
+        }
     }
     public class Entry<K,V>{
         public K key;
@@ -113,23 +109,20 @@ public class CustomMap<K,V> implements Serializable {
       return null;
     }
 
-   /* public static void main(String ...args){
+    public static void main(String ...args){
       CustomMap map = new CustomMap();
-      *//*map.put(1,"apple");
-      map.put(2,"orange");
-      map.put(3,"mango");
-      map.put(1,"pineapple");*//*
-    map.put("apple",2);
-    map.put("orange",3);
-    map.put("mango",4);
-    map.put("pears",40);
-    map.put("pineapple",5);
+        map.put("apple",2);
+        map.put("orange",3);
+        map.put("mango",4);
+        map.put("pears",40);
+        map.put("pineapple",5);
         System.out.println("Get value of orange ="+ map.get("orange"));
         System.out.println("Get value of mango ="+ map.get("mango"));
         System.out.println("Get value of apple ="+ map.get("apple"));
         System.out.println("Get value of pears ="+ map.get("pears"));
+        System.out.println("Get value of pears ="+ map.get("pineapple"));
 
 
 
     }
-*/}
+}
