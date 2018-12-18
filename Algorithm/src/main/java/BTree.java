@@ -4,22 +4,22 @@ public Node current;
 public Node temp;
 
 
-public Node addItem(Node head,int item){
-if(head == null){
-    head = new Node(item);
-    return  head;
+public Node addItem(Node current,int item){
+if(current == null){
+    current = new Node(item);
+    return  current;
 }
-  if(item>head.item){
-        head.right = addItem(head.right,item);
+  if(item>current.item){
+      current.right = addItem(current.right,item);
     }
-    if(item<head.item){
-        head.left = addItem(head.left,item);
+    if(item<current.item){
+        current.left = addItem(current.left,item);
     }
     else{
-        return head;
+        return current;
     }
 
- return head;
+ return current;
 }
 
 
@@ -73,7 +73,34 @@ public void add(int item){
 
 
     }
+    public void inOrderTraversal(){
+        inOrderTraversal(current);
+    }
+    public void inOrderTraversal(Node node){
+    if(node.left!=null)
+        inOrderTraversal(node.left);
+        System.out.println(node.item);
+        if(node.right!=null)
+        inOrderTraversal(node.right);
+    }
+    public boolean searchTree(int item) {
+      boolean found =  searchTree(current,item);
+      System.out.println(found);
+      return found;
+    }
 
+    public boolean searchTree(Node node, int item) {
+    if(node != null && item == node.item){
+        return true;
+    }
+    if (node != null && item > node.item) {
+          return searchTree(node.right,item);
+    }
+    if(node != null && item < node.item){
+             return searchTree(node.left,item);
+        }
+    return false;
+    }
 
     public static void main(String args[]){
     BTree tree = new BTree();
@@ -85,7 +112,7 @@ public void add(int item){
     tree.add(-10);
     tree.add(-8);
     tree.add(0);
-
-
+    tree.inOrderTraversal();
+    tree.searchTree(-8);
     }
 }

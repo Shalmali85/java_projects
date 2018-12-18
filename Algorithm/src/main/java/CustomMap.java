@@ -1,21 +1,26 @@
 
+import java.io.*;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class CustomMap<K,V>  {
 
-  private transient Node <K,V>[] table ;
+  private  Node <K,V>[] table ;
 
   public CustomMap(){
       table = new Node[200];
   }
 
-  public void put(K key, V value){
+
+
+
+    public void put(K key, V value){
       Node <K,V>[] entry;
       entry = table;
       if(key == null){
           return ;
       }
-      int hash = this.generateHashCode(key);
+      int hash =this.generateHashCode(key);
       if(entry[hash] == null) {
           entry[hash] = new Node(key, value, null);
       }
@@ -55,32 +60,18 @@ public class CustomMap<K,V>  {
             this.value = value;
             this.next = next;
         }
-
         @Override
         public K getKey() {
             return key;
         }
-
         @Override
         public V getValue() {
             return value;
         }
-
         @Override
         public V setValue(V value) {
             return this.value = value;
         }
-    }
-    public class Entry<K,V>{
-        public K key;
-        public V value;
-
-        public Entry(K key, V value){
-            this.key = key;
-            this.value = value;
-
-        }
-
     }
     public V  get(K key){
       Node<K,V>[] entry;
@@ -89,10 +80,10 @@ public class CustomMap<K,V>  {
           return null;
       int hash = this.generateHashCode(key);
       if(entry[hash]!=null){
-          if(entry[hash].next == null) {
+          if(entry[hash].next == null && key.equals(entry[hash].key)) {
               return entry[hash].value;
           }
-          else{
+          if(entry[hash].next != null){
               Node<K,V> current = entry[hash];
               while(current != null){
                   if(current.key == key) {
@@ -109,9 +100,34 @@ public class CustomMap<K,V>  {
       return null;
     }
 
+    public void remove(K key) {
+      Node<K,V>[] entry = table;
+        int hash = this.generateHashCode(key);
+        if (entry[hash] != null && entry[hash].next == null && key.equals(entry[hash].key)) {
+            entry[hash] = null;
+        }
+        if (entry[hash] != null && entry[hash].next != null) {
+            Node<K, V> current = entry[hash];
+           Node<K,V> prev=null;
+                while (current != null) {
+                    if (current.key.equals(key) && current.next == null) {
+                        prev.next = null;
+                        break;
+                    }
+                    if (current.key.equals(key) && current.next != null) {
+                        prev.next = current.next;
+                        break;
+                    }
+                    prev= current;
+                    current = current.next;
+                }
+        }
+    }
+
     public static void main(String ...args){
       CustomMap map = new CustomMap();
         map.put("apple",2);
+        map.put("peach",12);
         map.put("orange",3);
         map.put("mango",4);
         map.put("pears",40);
@@ -120,7 +136,14 @@ public class CustomMap<K,V>  {
         System.out.println("Get value of mango ="+ map.get("mango"));
         System.out.println("Get value of apple ="+ map.get("apple"));
         System.out.println("Get value of pears ="+ map.get("pears"));
-        System.out.println("Get value of pears ="+ map.get("pineapple"));
+        System.out.println("Get value of pineapple ="+ map.get("pineapple"));
+        System.out.println("Get value of peach ="+ map.get("peach"));
+        map.remove("pears");
+        System.out.println("Get value of pears ="+ map.get("pears"));
+        System.out.println("Get value of mango ="+ map.get("mango"));
+        System.out.println("Get value of apple ="+ map.get("apple"));
+        System.out.println("Get value of peach ="+ map.get("peach"));
+        System.out.println("Get value of orange ="+ map.get("orange"));
 
 
 
