@@ -61,7 +61,32 @@ public class CustomLinkedList {
         head = previous;
         return head;
     }
-    public class Node {
+
+    public void remove(int item){
+        Node entry = head;
+        Node prev = null;
+        Node current = entry;
+        while(current!=null){
+            if(current.item==item && current.next == null){
+                prev.next= null;
+                break;
+            }
+            if(current.item==item && current.next != null){
+                if(prev!=null) {
+                    prev.next = current.next;
+                    break;
+                }
+                else{
+                   head= current.next;
+                   break;
+                }
+            }
+            prev= current;
+            current = current.next;
+        }
+
+    }
+     static class Node {
 
       public int item;
       public Node next;
@@ -89,8 +114,10 @@ public class CustomLinkedList {
         customLinkedList.addItem(7);
         customLinkedList.addItem(1);
         customLinkedList.printItem();
+        customLinkedList.remove(7);
         customLinkedList.reverseLinkList(customLinkedList.getLinkedList());
         customLinkedList.printItem();
+
 
     }
 }

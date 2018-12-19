@@ -50,7 +50,7 @@ public class CustomMap<K,V>  {
        return (Integer)key;
    }
 
-    static  class Node<K,V> implements Map.Entry<K,V>{
+    static  class Node<K,V> {
         public K key;
         public V value;
         public Node next;
@@ -60,15 +60,12 @@ public class CustomMap<K,V>  {
             this.value = value;
             this.next = next;
         }
-        @Override
         public K getKey() {
             return key;
         }
-        @Override
         public V getValue() {
             return value;
         }
-        @Override
         public V setValue(V value) {
             return this.value = value;
         }
@@ -115,7 +112,12 @@ public class CustomMap<K,V>  {
                         break;
                     }
                     if (current.key.equals(key) && current.next != null) {
-                        prev.next = current.next;
+                        if(prev != null) {
+                            prev.next = current.next;
+                        }
+                        else{
+                            entry[hash]=current.next;
+                        }
                         break;
                     }
                     prev= current;
@@ -144,7 +146,7 @@ public class CustomMap<K,V>  {
         System.out.println("Get value of apple ="+ map.get("apple"));
         System.out.println("Get value of peach ="+ map.get("peach"));
         System.out.println("Get value of orange ="+ map.get("orange"));
-
+        map.remove("peach");
 
 
     }
