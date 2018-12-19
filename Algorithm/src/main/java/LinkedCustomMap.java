@@ -9,6 +9,10 @@ public class LinkedCustomMap<K,V> extends CustomMap<K,V> {
         Entry<K,V> linkedNode=   new Entry<K,V>(key,value,null);
       addNextNode(linkedNode);
     }
+    public void remove(K key){
+        super.remove(key);
+        maintainOrderOnDeletion(key);
+    }
 
     private void addNextNode(Entry<K,V>linkedNode){
         Entry<K,V> last = tail;
@@ -19,6 +23,31 @@ public class LinkedCustomMap<K,V> extends CustomMap<K,V> {
        else{
            linkedNode.before= last;
            last.after= linkedNode;
+       }
+    }
+
+    private void maintainOrderOnDeletion(K key){
+        Entry<K,V> entry = head;
+
+       if(key.equals(head.key)) {
+           head = (Entry<K, V>) head.after;
+       }
+       else{
+           Entry<K,V> current = entry;
+           Entry<K,V> forward = null;
+          while(current!=null){
+           if(current.key.equals(key) && current.after==null){
+             forward.after= null;
+             break;
+           }
+              if(current.key.equals(key) && current.after!=null){
+                  forward.after= current.after;
+                  break;
+              }
+           forward= current;
+           current = (Entry<K, V>) current.after;
+
+          }
        }
     }
     public void printOrder(){
@@ -39,24 +68,25 @@ public class LinkedCustomMap<K,V> extends CustomMap<K,V> {
 
 public static void main (String ...args) {
     LinkedCustomMap map = new LinkedCustomMap();
-    map.put("apple", 2);
-    map.put("orange", 3);
-    map.put("mango", 4);
-    map.put("pears", 40);
-    map.put("pineapple", 5);
+    map.put("apple",2);
+    map.put("peach",12);
+    map.put("orange",3);
+    map.put("mango",4);
+    map.put("pears",40);
+    map.put("pineapple",5);
+    System.out.println("Get value of orange ="+ map.get("orange"));
+    System.out.println("Get value of mango ="+ map.get("mango"));
+    System.out.println("Get value of apple ="+ map.get("apple"));
+    System.out.println("Get value of pears ="+ map.get("pears"));
+    System.out.println("Get value of pineapple ="+ map.get("pineapple"));
+    System.out.println("Get value of peach ="+ map.get("peach"));
+    map.remove("pears");
+    System.out.println("Get value of pears ="+ map.get("pears"));
+    System.out.println("Get value of mango ="+ map.get("mango"));
+    System.out.println("Get value of apple ="+ map.get("apple"));
+    System.out.println("Get value of peach ="+ map.get("peach"));
+    System.out.println("Get value of orange ="+ map.get("orange"));
     map.printOrder();
-    System.out.println("Get value of orange =" + map.get("orange"));
-    System.out.println("Get value of mango =" + map.get("mango"));
-    System.out.println("Get value of apple =" + map.get("apple"));
-    System.out.println("Get value of pears =" + map.get("pears"));
-    System.out.println("Get value of pears =" + map.get("pineapple"));
-    LinkedHashMap map1 = new LinkedHashMap();
-    map1.put("apple", 2);
-    map1.put("orange", 3);
-    map1.put("mango", 4);
-    map1.put("pears", 40);
-    map1.put("pineapple", 5);
-
 
 
 }
